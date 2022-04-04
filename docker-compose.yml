@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  traefik:
+    image: "traefik:v2.6"
+    container_name: "traefik"
+    command:
+      - "--configfile=/root/traefik/traefik.yml"
+      #- "--log.level=DEBUG"
+      # - "--api.insecure=true"
+      # - "--providers.docker=true"
+      # - "--providers.docker.exposedbydefault=false"
+      # - "--entrypoints.web.address=:80"
+      # - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      # - "/root/traefik.yml:/root/traefik.yml"
+      - "/root/traefik/:/root/traefik/"
+      # - /root/letsencrypt:/letsencrypt
+    environment:
+      DO_AUTH_TOKEN: "${DO_AUTH_TOKEN}"

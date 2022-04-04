@@ -1,0 +1,45 @@
+http:
+  routers:
+    to-old-kindelia-org:
+      rule: "Host(`old.kindelia.org`)"
+      service: old-kindelia-org
+      entryPoints:
+        - web
+    to-old-kindelia-org-secure:
+      rule: "Host(`old.kindelia.org`)"
+      service: old-kindelia-org
+      entryPoints:
+        - web-secure
+      tls:
+        certResolver: lets-encrypt
+        domains:
+          - main: "old.kindelia.org"
+    to-kindelia-org:
+      service: kindelia-org
+      # rule: "Host(`kindelia.org`, `kindelia.io`)"
+      rule: "PathPrefix(`/`)"
+      entryPoints:
+        - web
+    to-kindelia-org-secure:
+      service: kindelia-org
+      rule: "Host(`kindelia.org`, `kindelia.io`, `kdl.li`)"
+      # rule: "Host(`*`)"
+      entryPoints:
+        - web-secure
+      tls:
+        certResolver: lets-encrypt
+        domains:
+          - main: kindelia.org
+            sans:
+              # - "*.kindelia.org"
+              - "kindelia.io"
+              - "kdl.li"
+  services:
+    old-kindelia-org:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:7170"
+    kindelia-org:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:8000"
