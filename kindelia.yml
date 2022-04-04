@@ -20,20 +20,32 @@ http:
       rule: "PathPrefix(`/`)"
       entryPoints:
         - web
+      middlewares:
+        - alts-redirect
     to-kindelia-org-secure:
       service: kindelia-org
       rule: "Host(`kindelia.org`, `kindelia.io`, `kdl.li`)"
       # rule: "Host(`*`)"
       entryPoints:
         - web-secure
+      middlewares:
+        - alts-redirect
       tls:
         certResolver: lets-encrypt
         domains:
           - main: kindelia.org
             sans:
-              # - "*.kindelia.org"
               - "kindelia.io"
               - "kdl.li"
+  middlewares:
+    # https-redirect:
+    #   redirectScheme:
+    #     scheme: https
+    #     permanent: true
+    alts-redirect:
+      redirectRegex:
+        regex: "^https?://(.+?)/(.*)"
+        replacement: "https://kindelia.org/${2}"
   services:
     old-kindelia-org:
       loadBalancer:
