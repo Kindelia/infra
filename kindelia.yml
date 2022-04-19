@@ -54,4 +54,4 @@ http:
     kindelia-org:
       loadBalancer:
         servers:
-          - url: "http://host.docker.internal:8000"
+          - url: "http://host.docker.internal:8888"
