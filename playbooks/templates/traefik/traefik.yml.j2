@@ -6,12 +6,12 @@ log:
   level: DEBUG
 
 accessLog:
-  filePath: "/root/traefik/access_log.log"
+  filePath: "/srv/traefik/access_log.log"
 
 providers:
   # Enable the file provider to define routers / middlewares / services in file
   file:
-    filename: /root/traefik/kindelia.yml
+    filename: /srv/traefik/site.yml
 
 entryPoints:
   web:
@@ -30,11 +30,12 @@ certificatesResolvers:
   lets-encrypt:
     acme:
       email: "contact@kindelia.org"
-      storage: "/root/traefik/acme.json"
-      # caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      storage: "/srv/traefik/acme.json"
+      {% if mode == "production" -%}
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
-      # httpChallenge:
-      #   entryPoint: "web"
+      {% else -%}
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      {% endif -%}
       dnsChallenge:
         provider: digitalocean
         delayBeforeCheck: 10 

@@ -2,15 +2,15 @@ version: "3.3"
 
 services:
   traefik:
-    image: "traefik:v2.6"
     container_name: "traefik"
+    hostname: "traefik"
+    image: "traefik:v2.6"
     command:
-      - "--configfile=/root/traefik/traefik.yml"
+      - "--configfile=/srv/traefik/traefik.yml"
       #- "--log.level=DEBUG"
       # - "--api.insecure=true"
       # - "--providers.docker=true"
       # - "--providers.docker.exposedbydefault=false"
-      # - "--entrypoints.web.address=:80"
       # - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
@@ -20,8 +20,16 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      # - "/root/traefik.yml:/root/traefik.yml"
-      - "/root/traefik/:/root/traefik/"
-      # - /root/letsencrypt:/letsencrypt
+      - "/srv/traefik/:/srv/traefik/"
     environment:
       DO_AUTH_TOKEN: "${DO_AUTH_TOKEN}"
+
+  web-app:
+    container_name: "web-app"
+    hostname: "web-app"
+    image: ghcr.io/kindelia/kindelia.org:staging
+
+  kindelia-node-test:
+    image: "kelvinss/kindelia-node"
+    ports:
+      - "42000:42000/udp"

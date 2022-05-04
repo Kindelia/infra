@@ -1,0 +1,18 @@
+---
+
+- hosts: server
+  tasks:
+    - name: install pip
+      package:
+        name: python3-pip
+
+    - name: install Python Docker SDK
+      pip:
+        name: docker
+
+    - name: get Docker info
+      community.docker.docker_host_info:
+      register: docker_info 
+
+    - debug:
+        msg: "hostname: {{ docker_info.host_info.Name }}"

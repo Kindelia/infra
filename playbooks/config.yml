@@ -1,0 +1,18 @@
+---
+
+- hosts: server
+  tasks:
+    - name: directory /srv/traefik/
+      file:
+        path: /srv/traefik/
+        state: directory
+
+    - name: deploy site.yml
+      template:
+        src: traefik/site.yml.j2
+        dest: /srv/traefik/site.yml
+
+    - name: deploy traefik.yml
+      template:
+        src: traefik/traefik.yml.j2
+        dest: /srv/traefik/traefik.yml

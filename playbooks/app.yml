@@ -1,0 +1,8 @@
+---
+
+- hosts: server
+  tasks:
+  - name: run web app container
+    community.docker.docker_compose:
+      project_src: ./
+      state: present

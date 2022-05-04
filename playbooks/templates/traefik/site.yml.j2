@@ -1,22 +1,21 @@
 http:
   routers:
     to-old-kindelia-org:
-      rule: "Host(`old.kindelia.org`)"
+      rule: "Host(`old.{{ domain_base }}`)"
       service: old-kindelia-org
       entryPoints:
         - web
     to-old-kindelia-org-secure:
-      rule: "Host(`old.kindelia.org`)"
+      rule: "Host(`old.{{ domain_base }}`)"
       service: old-kindelia-org
       entryPoints:
         - web-secure
       tls:
         certResolver: lets-encrypt
         domains:
-          - main: "old.kindelia.org"
+          - main: "old.{{ domain_base }}"
     to-kindelia-org:
       service: kindelia-org
-      # rule: "Host(`kindelia.org`, `kindelia.io`)"
       rule: "PathPrefix(`/`)"
       entryPoints:
         - web
@@ -24,7 +23,7 @@ http:
         - alts-redirect
     to-kindelia-org-secure:
       service: kindelia-org
-      rule: "Host(`kindelia.org`, `kindelia.io`, `kdl.li`)"
+      rule: "Host(`{{ domain_base }}`)"
       # rule: "Host(`*`)"
       entryPoints:
         - web-secure
@@ -33,10 +32,11 @@ http:
       tls:
         certResolver: lets-encrypt
         domains:
-          - main: kindelia.org
+          - main: "{{ domain_base }}"
             sans:
               - "kindelia.io"
               - "kdl.li"
+
   middlewares:
     # https-redirect:
     #   redirectScheme:
@@ -45,7 +45,9 @@ http:
     alts-redirect:
       redirectRegex:
         regex: "^https?://(.+?)/(.*)"
-        replacement: "https://kindelia.org/${2}"
+        replacement: "https://{{ domain_base }}/${2}"
+        permanent: true
+
   services:
     old-kindelia-org:
       loadBalancer:
@@ -54,4 +56,5 @@ http:
     kindelia-org:
       loadBalancer:
         servers:
-          - url: "http://host.docker.internal:8888"
+          {# - url: "http://host.docker.internal:8888" #}
+          - url: "http://web-app"
