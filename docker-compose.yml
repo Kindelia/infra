@@ -15,7 +15,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+      - "8080:8080"  # Traefik Dashboard
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -27,7 +27,7 @@ services:
   web-app:
     container_name: "web-app"
     hostname: "web-app"
-    image: ghcr.io/kindelia/kindelia.org:staging
+    image: ghcr.io/kindelia/kindelia.org:${MODE:-test}
 
   kindelia-node-test:
     image: "kelvinss/kindelia-node"

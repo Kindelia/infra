@@ -31,7 +31,7 @@ certificatesResolvers:
     acme:
       email: "contact@kindelia.org"
       storage: "/srv/traefik/acme.json"
-      {% if mode == "production" -%}
+      {% if mode == "master" -%}
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       {% else -%}
       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"

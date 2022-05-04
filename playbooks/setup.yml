@@ -2,6 +2,8 @@
 
 - hosts: server
   tasks:
+    # TODO: setup Docker
+
     - name: install pip
       package:
         name: python3-pip
