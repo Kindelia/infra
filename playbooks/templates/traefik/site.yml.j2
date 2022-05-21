@@ -5,15 +5,15 @@ http:
       service: old-kindelia-org
       entryPoints:
         - web
-    to-old-kindelia-org-secure:
-      rule: "Host(`old.{{ domain_base }}`)"
-      service: old-kindelia-org
-      entryPoints:
-        - web-secure
-      tls:
-        certResolver: lets-encrypt
-        domains:
-          - main: "old.{{ domain_base }}"
+    # to-old-kindelia-org-secure:
+    #   rule: "Host(`old.{{ domain_base }}`)"
+    #   service: old-kindelia-org
+    #   entryPoints:
+    #     - web-secure
+    #   tls:
+    #     certResolver: lets-encrypt
+    #     domains:
+    #       - main: "old.{{ domain_base }}"
     to-kindelia-org:
       service: kindelia-org
       rule: "PathPrefix(`/`)"
@@ -60,3 +60,4 @@ http:
           - url: "http://web-app"
 
     # TODO: enqine
+    # TODO: `old.` services
