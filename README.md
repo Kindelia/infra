@@ -12,7 +12,7 @@ Edit `.env`, filling the variables:
 
 
 ```sh
-ansible-playbook -i inventory/common.ini -i inventory/staging.ini playbooks/setup.yml
+ansible-playbook -i inventory/common.ini -i inventory/staging.ini playbooks/setup-docker.yml
 
 ansible-playbook -i inventory/common.ini -i inventory/staging.ini playbooks/config.yml
 ```

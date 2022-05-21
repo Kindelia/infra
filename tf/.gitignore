@@ -1,0 +1,4 @@
+env.auto.tfvars
+
+*.tfstate
+*.tfstate.backup

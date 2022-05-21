@@ -2,7 +2,7 @@
 
 - hosts: server
   tasks:
-    # TODO: setup Docker
+    # TODO: install Docker
 
     - name: install pip
       package:
