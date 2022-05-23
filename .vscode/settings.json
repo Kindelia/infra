@@ -1,5 +1,11 @@
 {
   "cSpell.words": [
-    "kindelia"
+    "ansible",
+    "chdir",
+    "kindelia",
+    "rustup"
+  ],
+  "cSpell.ignoreWords": [
+    "newhostkey"
   ]
 }

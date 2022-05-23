@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  tasks:
+
+    - name: "Copy block code"
+      copy:
+        src:  'block.kdl'
+        dest: '/srv/kindelia-node/block.kdl'
+
+    - name: 'Directory /root/.config/systemd/user/'
+      file:
+        state: directory
+        path: '/root/.config/systemd/user/'
+
+    - name: "Copy service definition"
+      copy:
+        src:  'kindelia-node.service'
+        dest: '/root/.config/systemd/user/kindelia-node.service'
+
+    # - name: "Start service"
+    #   systemd:
+    #     scope: user
+    #     service: 'kindelia-node'
+    #     state: started
+
+    - name: "(Re)start service"
+      systemd:
+        scope: user
+        service: 'kindelia-node'
+        state: restarted

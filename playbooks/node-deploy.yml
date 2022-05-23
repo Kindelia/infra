@@ -1,0 +1,36 @@
+---
+
+- hosts: all
+
+  vars:
+    # repo: 'Kindelia/Kindelia'
+    # version: 'master'
+    repo: 'quleuber/Kindelia'
+    version: 'dev'
+
+  tasks:
+    - name: "Stop service"
+      systemd:
+        scope: user
+        service: 'kindelia-node'
+        state: stopped
+
+    - name: "Checkout node code"
+      ansible.builtin.git:
+        accept_newhostkey: true
+        repo: 'https://github.com/{{repo}}.git'
+        dest: /srv/kindelia-node/repo
+        version: '{{version}}'
+
+    - name: "Build node"
+      shell:
+        chdir: '/srv/kindelia-node/repo'
+        cmd: '/root/.cargo/bin/cargo build --release'
+    
+    # - name: "Install node"
+    #   shell:
+    #     chdir: '/srv/kindelia-node/repo'
+    #     cmd: '/root/.cargo/bin/cargo install --path .'
+
+    - name: "Copy node binary"
+      shell: 'cp /srv/kindelia-node/repo/target/release/kindelia /srv/kindelia-node/kindelia'

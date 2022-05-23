@@ -3,6 +3,16 @@ variable "ssh_keys" {
   type        = list(string)
 }
 
+variable "regions" {
+  default = [
+    // "nyc3", // New York
+    "sfo3", // San Francisco
+    "ams3", // Amsterdan
+    "sgp1", // Singapore
+    "blr1", // Bangalore (India)
+  ]
+}
+
 data "digitalocean_project" "kindelia_project" {
   name = "Kindelia"
 }
@@ -10,14 +20,16 @@ data "digitalocean_project" "kindelia_project" {
 resource "digitalocean_project_resources" "kindelia" {
   project = data.digitalocean_project.kindelia_project.id
   resources = [
-    digitalocean_droplet.testnet_1.urn
+    for m in digitalocean_droplet.testnet : m.urn
   ]
 }
 
 # Create a web server
-resource "digitalocean_droplet" "testnet_1" {
+resource "digitalocean_droplet" "testnet" {
+  count  = length(var.regions)
+  name   = "testnet-${count.index}"
+
   image  = "ubuntu-22-04-x64"
-  name   = "testnet-1"
   region = "nyc3"
   size   = "s-1vcpu-1gb-amd"
 
@@ -42,4 +54,8 @@ resource "digitalocean_droplet" "testnet_1" {
         ../playbooks/setup-rust.yml \
       OET
   }
+}
+
+output "testnet_ips" {
+  value = digitalocean_droplet.testnet[*].ipv4_address
 }

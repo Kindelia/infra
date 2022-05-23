@@ -3,6 +3,12 @@
 - hosts: all
   tasks:
 
+  - name: install base dev
+    ansible.builtin.apt:
+      state: present
+      update_cache: yes
+      name: 'build-essential'
+
   - name: check if cargo is installed
     register: cargo_exists
     shell: command -v cargo
@@ -23,9 +29,9 @@
     shell: /tmp/sh.rustup.rs -y
     tags:
       - rust
-  
+
   - name: install Rust stable toolchain
-    when: carge_exists is failed
-    shell: rustup install stable
+    when: cargo_exists is failed
+    shell: /root/.cargo/bin/rustup install stable
     tags:
       - rust

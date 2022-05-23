@@ -1,0 +1,9 @@
+[Unit]
+Description=Kindelia node
+
+[Service]
+Type=simple
+ExecStart=/srv/kindelia-node/kindelia start /srv/kindelia-node/block.kdl
+
+[Install]
+WantedBy=default.target
