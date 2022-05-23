@@ -23,3 +23,9 @@
     shell: /tmp/sh.rustup.rs -y
     tags:
       - rust
+  
+  - name: install Rust stable toolchain
+    when: carge_exists is failed
+    shell: rustup install stable
+    tags:
+      - rust
