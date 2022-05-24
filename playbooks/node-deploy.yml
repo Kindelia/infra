@@ -6,7 +6,7 @@
     # repo: 'Kindelia/Kindelia'
     # version: 'master'
     repo: 'quleuber/Kindelia'
-    version: 'dev'
+    version: 'testnet'
 
   tasks:
     - name: "Stop service"
@@ -26,7 +26,7 @@
       shell:
         chdir: '/srv/kindelia-node/repo'
         cmd: '/root/.cargo/bin/cargo build --release'
-    
+
     # - name: "Install node"
     #   shell:
     #     chdir: '/srv/kindelia-node/repo'

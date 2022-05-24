@@ -1,0 +1,5 @@
+[all:vars]
+
+dd_agent_major_version=7
+dd_site="us5.datadoghq.com"
+dd_api_key="<KEY HERE>"

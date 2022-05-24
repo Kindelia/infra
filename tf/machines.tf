@@ -51,6 +51,9 @@ resource "digitalocean_droplet" "testnet" {
       ANSIBLE_HOST_KEY_CHECKING=False \
       ansible-playbook \
         -u root -i '${self.ipv4_address},' \
+        -i 'inventory/config/datadog.ini' \
+        ../playbooks/setup-journald.yml \
+        ../playbooks/setup-datadog.yml \
         ../playbooks/setup-rust.yml \
       OET
   }

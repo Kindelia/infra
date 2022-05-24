@@ -1,0 +1,34 @@
+---
+
+- hosts: all
+  tasks:
+
+    - name: "Install Datadog Agent"
+      shell: '
+        DD_AGENT_MAJOR_VERSION="{{ dd_agent_major_version }}"
+        DD_API_KEY="{{ dd_api_key }}"
+        DD_SITE="{{ dd_site }}"
+        bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+        '
+
+    - name: "Add Datadog Agent to systemd-journal"
+      # shell: 'usermod -a -G systemd-journal dd-agent'
+      user:
+        groups: ['systemd-journal']
+        append: true
+        name: 'dd-agent'
+
+    - name: "Enable logging on Datadog config"
+      template:
+        src:  'datadog/datadog.yaml.j2'
+        dest: '/etc/datadog-agent/datadog.yaml'
+
+    - name: "Enable journald logging on Datadog config"
+      template:
+        src:  'datadog/journald.d_conf.yaml.j2'
+        dest: '/etc/datadog-agent/conf.d/journald.d/conf.yaml'
+
+    - name: "Restart Datadog Agent service"
+      systemd:
+        service: 'datadog-agent'
+        state: restarted

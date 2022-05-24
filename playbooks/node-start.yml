@@ -8,15 +8,10 @@
         src:  'block.kdl'
         dest: '/srv/kindelia-node/block.kdl'
 
-    - name: 'Directory /root/.config/systemd/user/'
-      file:
-        state: directory
-        path: '/root/.config/systemd/user/'
-
-    - name: "Copy service definition"
+    - name: "Deploy service definition"
       copy:
         src:  'kindelia-node.service'
-        dest: '/root/.config/systemd/user/kindelia-node.service'
+        dest: '/etc/systemd/system/kindelia-node.service'
 
     # - name: "Start service"
     #   systemd:
@@ -26,6 +21,6 @@
 
     - name: "(Re)start service"
       systemd:
-        scope: user
+        # scope: user
         service: 'kindelia-node'
         state: restarted
