@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+
+  tasks:
+    - name: "Stop service"
+      systemd:
+        service: 'kindelia-node'
+        state: stopped
+
+    - name: "Clean block data"
+      file:
+        path: "/root/.kindelia/data"
+        state: absent

@@ -9,12 +9,6 @@
     version: 'testnet'
 
   tasks:
-    - name: "Stop service"
-      systemd:
-        scope: user
-        service: 'kindelia-node'
-        state: stopped
-
     - name: "Checkout node code"
       ansible.builtin.git:
         accept_newhostkey: true
@@ -31,6 +25,11 @@
     #   shell:
     #     chdir: '/srv/kindelia-node/repo'
     #     cmd: '/root/.cargo/bin/cargo install --path .'
+
+    - name: "Stop service"
+      systemd:
+        service: 'kindelia-node'
+        state: stopped
 
     - name: "Copy node binary"
       shell: 'cp /srv/kindelia-node/repo/target/release/kindelia /srv/kindelia-node/kindelia'
