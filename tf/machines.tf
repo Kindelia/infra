@@ -30,7 +30,7 @@ resource "digitalocean_droplet" "testnet" {
   name   = "testnet-${count.index}"
 
   image  = "ubuntu-22-04-x64"
-  region = "nyc3"
+  region = "${var.regions[count.index]}"  // TODO: test
   size   = "s-1vcpu-1gb-amd"
 
   ssh_keys = var.ssh_keys
@@ -51,7 +51,7 @@ resource "digitalocean_droplet" "testnet" {
       ANSIBLE_HOST_KEY_CHECKING=False \
       ansible-playbook \
         -u root -i '${self.ipv4_address},' \
-        -i 'inventory/config/datadog.ini' \
+        -i '../inventory/config/datadog.ini' \
         ../playbooks/setup-journald.yml \
         ../playbooks/setup-datadog.yml \
         ../playbooks/setup-rust.yml \
