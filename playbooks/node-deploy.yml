@@ -27,6 +27,7 @@
     #     cmd: '/root/.cargo/bin/cargo install --path .'
 
     - name: "Stop service"
+      ignore_errors: true
       systemd:
         service: 'kindelia-node'
         state: stopped
