@@ -10,5 +10,5 @@
 
     - name: "Clean block data"
       file:
-        path: "/root/.kindelia/data"
+        path: "/root/.kindelia/state"
         state: absent
