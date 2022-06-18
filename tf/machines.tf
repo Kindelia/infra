@@ -9,7 +9,7 @@ variable "regions" {
     "sfo3", // San Francisco
     "ams3", // Amsterdan
     "sgp1", // Singapore
-    "blr1", // Bangalore (India)
+    # "blr1", // Bangalore (India)
   ]
 }
 
@@ -30,8 +30,10 @@ resource "digitalocean_droplet" "testnet" {
   name   = "testnet-${count.index}"
 
   image  = "ubuntu-22-04-x64"
-  region = "${var.regions[count.index]}"  // TODO: test
-  size   = "s-1vcpu-1gb-amd"
+  region = "${var.regions[count.index]}"
+
+  # size = "s-1vcpu-1gb-amd"
+  size = "s-2vcpu-4gb-amd"
 
   ssh_keys = var.ssh_keys
 
