@@ -33,7 +33,8 @@ resource "digitalocean_droplet" "testnet" {
   region = "${var.regions[count.index]}"
 
   # size = "s-1vcpu-1gb-amd"
-  size = "s-2vcpu-4gb-amd"
+  # size = "s-2vcpu-4gb-amd"
+  size = "m-4vcpu-32gb"
 
   ssh_keys = var.ssh_keys
 
