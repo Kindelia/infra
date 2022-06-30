@@ -20,6 +20,8 @@
       shell:
         chdir: '/srv/kindelia-node/repo'
         cmd: '/root/.cargo/bin/cargo build --release'
+      register: cargo_build
+      changed_when: "'Compiling' in cargo_build.stderr"
 
     # - name: "Install node"
     #   shell:
@@ -33,4 +35,8 @@
         state: stopped
 
     - name: "Copy node binary"
-      shell: 'cp /srv/kindelia-node/repo/target/release/kindelia /srv/kindelia-node/kindelia'
+      ansible.builtin.copy:
+        remote_src: true
+        mode: preserve
+        src: '/srv/kindelia-node/repo/target/release/kindelia'
+        dest: '/usr/local/bin/kindelia'

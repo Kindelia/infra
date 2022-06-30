@@ -3,7 +3,7 @@ Description=Kindelia node
 
 [Service]
 Type=simple
-ExecStart=/srv/kindelia-node/kindelia start /srv/kindelia-node/block.kdl
+ExecStart=/usr/local/bin/kindelia start --testnet
 
 [Install]
 WantedBy=default.target
