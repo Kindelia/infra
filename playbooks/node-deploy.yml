@@ -9,14 +9,14 @@
     version: 'testnet'
 
   tasks:
-    - name: "Checkout node code"
+    - name: "Checkout code"
       ansible.builtin.git:
         accept_newhostkey: true
         repo: 'https://github.com/{{repo}}.git'
         dest: /srv/kindelia-node/repo
         version: '{{version}}'
 
-    - name: "Build node"
+    - name: "Build"
       shell:
         chdir: '/srv/kindelia-node/repo'
         cmd: '/root/.cargo/bin/cargo build --release'
@@ -34,7 +34,7 @@
         service: 'kindelia-node'
         state: stopped
 
-    - name: "Copy node binary"
+    - name: "Install node binary"
       ansible.builtin.copy:
         remote_src: true
         mode: preserve
