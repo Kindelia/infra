@@ -23,7 +23,7 @@ http:
         - alts-redirect
     to-kindelia-org-secure:
       service: kindelia-org
-      rule: "Host(`{{ domain_base }}`)"
+      rule: "Host(`{{ domain_base }}`) || Host(`kindelia.io`)"
       # rule: "Host(`*`)"
       entryPoints:
         - web-secure
