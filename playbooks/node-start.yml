@@ -4,6 +4,6 @@
   tasks:
     - name: "Start service"
       systemd:
-        scope: user
+        # scope: user
         service: 'kindelia-node'
         state: started
