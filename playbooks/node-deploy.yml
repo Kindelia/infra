@@ -10,11 +10,14 @@
 
   tasks:
     - name: "Checkout code"
+      register: git_info
       ansible.builtin.git:
         accept_newhostkey: true
         repo: 'https://github.com/{{repo}}.git'
         dest: /srv/kindelia-node/repo
         version: '{{version}}'
+    
+    - debug: msg="commit = {{ git_info.after }}"
 
     - name: "Build"
       shell:
