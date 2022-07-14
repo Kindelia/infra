@@ -43,3 +43,8 @@
         mode: preserve
         src: '/srv/kindelia-node/repo/target/release/kindelia'
         dest: '/usr/local/bin/kindelia'
+
+    - name: "Deploy service definition"
+      copy:
+        src:  'kindelia-node.service'
+        dest: '/etc/systemd/system/kindelia-node.service'

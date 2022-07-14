@@ -2,16 +2,10 @@
 
 - hosts: all
   tasks:
-
     # - name: "Copy block code"
     #   copy:
     #     src:  'block.kdl'
     #     dest: '/srv/kindelia-node/block.kdl'
-
-    - name: "Deploy service definition"
-      copy:
-        src:  'kindelia-node.service'
-        dest: '/etc/systemd/system/kindelia-node.service'
 
     - name: "(Re)start service"
       systemd:
