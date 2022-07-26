@@ -2,8 +2,8 @@
 
 - hosts: all
   tasks:
-    - name: "Start node service"
+    - name: "Stop node service"
       systemd:
         # scope: user
         service: 'kindelia-node'
-        state: started
+        state: stopped

@@ -7,7 +7,7 @@
     #     src:  'block.kdl'
     #     dest: '/srv/kindelia-node/block.kdl'
 
-    - name: "(Re)start service"
+    - name: "(Re)start node service"
       systemd:
         # scope: user
         service: 'kindelia-node'
